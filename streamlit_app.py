@@ -11,6 +11,8 @@ import streamlit as st
 
 @st.cache_resource
 def load_model():
+    os.makedirs(path, exist_ok=True)
+    
     wget.download("https://s3cdn.newfemme.co/model-garden/texttospeech/xtts/config.json", out="models/xtts/config.json")
     wget.download("https://s3cdn.newfemme.co/model-garden/texttospeech/xtts/hash.md5", out="models/xtts/hash.md5")
     wget.download("https://s3cdn.newfemme.co/model-garden/texttospeech/xtts/model.pth", out="models/xtts/model.pth")
