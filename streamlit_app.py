@@ -1,8 +1,9 @@
-import numpy as np
 import torch
+import numpy as np
 from TTS.api import TTS
 
 import os
+import wget
 import tempfile
 
 import streamlit as st
@@ -10,8 +11,15 @@ import streamlit as st
 
 @st.cache_resource
 def load_model():
+    wget.download("https://s3cdn.newfemme.co/model-garden/texttospeech/xtts/config.json", out="models/xtts/config.json")
+    wget.download("https://s3cdn.newfemme.co/model-garden/texttospeech/xtts/hash.md5", out="models/xtts/hash.md5")
+    wget.download("https://s3cdn.newfemme.co/model-garden/texttospeech/xtts/model.pth", out="models/xtts/model.pth")
+    wget.download("https://s3cdn.newfemme.co/model-garden/texttospeech/xtts/tos_agreed.txt", out="models/xtts/tos_agreed.txt")
+    wget.download("https://s3cdn.newfemme.co/model-garden/texttospeech/xtts/vocab.json", out="models/xtts/vocab.json")
+
+
     xtts = TTS(
-        "tts_models/multilingual/multi-dataset/xtts_v2"
+        "models/xtts"
     ).to("cuda")
 
     return xtts
