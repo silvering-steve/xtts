@@ -17,7 +17,6 @@ def load_model():
     wget.download("https://s3cdn.newfemme.co/model-garden/texttospeech/xtts/tos_agreed.txt", out="models/xtts/tos_agreed.txt")
     wget.download("https://s3cdn.newfemme.co/model-garden/texttospeech/xtts/vocab.json", out="models/xtts/vocab.json")
 
-
     xtts = TTS(
         "models/xtts"
     ).to("cuda")
