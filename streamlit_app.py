@@ -1,5 +1,3 @@
-import torch
-import numpy as np
 from TTS.api import TTS
 
 import os
@@ -15,11 +13,11 @@ def load_model():
 
     if not os.path.exists('models/xtts/model.pth'):
         with st.spinner("Downloading model..."):
-            wget.download("https://s3cdn.newfemme.co/model-garden/texttospeech/xtts/config.json", out="models/xtts/config.json")
+            wget.download("https://s3cdn.newfemme.co/model-garden/texttospeech/xtts/config.json", out="models/xtts/config.json", )
             wget.download("https://s3cdn.newfemme.co/model-garden/texttospeech/xtts/hash.md5", out="models/xtts/hash.md5")
-            wget.download("https://s3cdn.newfemme.co/model-garden/texttospeech/xtts/model.pth", out="models/xtts/model.pth")
             wget.download("https://s3cdn.newfemme.co/model-garden/texttospeech/xtts/tos_agreed.txt", out="models/xtts/tos_agreed.txt")
             wget.download("https://s3cdn.newfemme.co/model-garden/texttospeech/xtts/vocab.json", out="models/xtts/vocab.json")
+            wget.download("https://s3cdn.newfemme.co/model-garden/texttospeech/xtts/model.pth", out="models/xtts/model.pth")
 
     with st.spinner("Loading model..."):
         xtts = TTS(
