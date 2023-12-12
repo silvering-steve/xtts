@@ -11,17 +11,21 @@ import streamlit as st
 
 @st.cache_resource
 def load_model():
-    os.makedirs("models/xtts", exist_ok=True)
-    
-    wget.download("https://s3cdn.newfemme.co/model-garden/texttospeech/xtts/config.json", out="models/xtts/config.json")
-    wget.download("https://s3cdn.newfemme.co/model-garden/texttospeech/xtts/hash.md5", out="models/xtts/hash.md5")
-    wget.download("https://s3cdn.newfemme.co/model-garden/texttospeech/xtts/model.pth", out="models/xtts/model.pth")
-    wget.download("https://s3cdn.newfemme.co/model-garden/texttospeech/xtts/tos_agreed.txt", out="models/xtts/tos_agreed.txt")
-    wget.download("https://s3cdn.newfemme.co/model-garden/texttospeech/xtts/vocab.json", out="models/xtts/vocab.json")
+    os.makedirs('models/xtts', exist_ok=True)
 
-    xtts = TTS(
-        "models/xtts"
-    ).to("cuda")
+    if not os.path.exists('models/xtts/model.pth'):
+        with st.spinner("Downloading model..."):
+            wget.download("https://s3cdn.newfemme.co/model-garden/texttospeech/xtts/config.json", out="models/xtts/config.json")
+            wget.download("https://s3cdn.newfemme.co/model-garden/texttospeech/xtts/hash.md5", out="models/xtts/hash.md5")
+            wget.download("https://s3cdn.newfemme.co/model-garden/texttospeech/xtts/model.pth", out="models/xtts/model.pth")
+            wget.download("https://s3cdn.newfemme.co/model-garden/texttospeech/xtts/tos_agreed.txt", out="models/xtts/tos_agreed.txt")
+            wget.download("https://s3cdn.newfemme.co/model-garden/texttospeech/xtts/vocab.json", out="models/xtts/vocab.json")
+
+    with st.spinner("Loading model..."):
+        xtts = TTS(
+            model_path="models/xtts",
+            config_path="models/xtts/config.json"
+        ).to("cuda")
 
     return xtts
 
